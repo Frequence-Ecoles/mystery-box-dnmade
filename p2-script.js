@@ -4,8 +4,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const videoOutro = document.getElementById("video-outro");
     const videoIntro = document.querySelector(".intro");
 
+    console.log('DOMContentLoaded');
+
     btn.addEventListener('touchstart', function (event) {
         event.preventDefault();
+        console.log('touchstart');
         videoIntro.classList.add('flou');
         const timerId = setTimeout(lancerVideoAleatoire, 2000);
         btn.dataset.timerId = timerId;
