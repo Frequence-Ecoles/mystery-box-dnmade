@@ -10,9 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     btn.addEventListener('touchstart', function (event) {
 
-        //fullscreen
-        fullscreen();
-
         event.preventDefault();
         console.log('touchstart');
         videoIntro.classList.add('flou');
@@ -71,21 +68,42 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // fullscreen
-var fullscreenAvailable = true;
+    let fullscreenAvailable = true;
 
-function fullscreen() {
-    if (fullscreenAvailable) {
-        var el = document.documentElement,
-            rfs = el.requestFullscreen
-                || el.webkitRequestFullScreen
-                || el.mozRequestFullScreen
-                || el.msRequestFullscreen
-        ;
-        rfs.call(el);
+    var elem = document.body;
+    document.addEventListener('click', function() {
+      if (fullscreenAvailable) {
+        requestFullScreen(elem);
+        fullscreenAvailable = false;
+      }
+    })
+    
+    function requestFullScreen(element) {
+    
+      // Supports most browsers and their versions.
+      var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+    
+      if (requestMethod) { // Native full screen.
+        requestMethod.call(element);
+      } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
+        var wscript = new ActiveXObject("WScript.Shell");
+        if (wscript !== null) {
+          wscript.SendKeys("{F11}");
+        }
+      }
     }
-
-    fullscreenAvailable = false;
-}
+    
+    function closeFullscreen() {
+    
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        /* Safari */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        /* IE11 */
+        document.msExitFullscreen();
+      }
+    }
 
 });
