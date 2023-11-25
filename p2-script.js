@@ -4,9 +4,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const videoOutro = document.getElementById("video-outro");
     const videoIntro = document.querySelector(".intro");
 
+
+
     console.log('DOMContentLoaded');
 
     btn.addEventListener('touchstart', function (event) {
+
+        //fullscreen
+        fullscreen();
+
         event.preventDefault();
         console.log('touchstart');
         videoIntro.classList.add('flou');
@@ -64,4 +70,22 @@ document.addEventListener('DOMContentLoaded', function () {
             videoIntro.play();
         });
     }
+
+    // fullscreen
+var fullscreenAvailable = true;
+
+function fullscreen() {
+    if (fullscreenAvailable) {
+        var el = document.documentElement,
+            rfs = el.requestFullscreen
+                || el.webkitRequestFullScreen
+                || el.mozRequestFullScreen
+                || el.msRequestFullscreen
+        ;
+        rfs.call(el);
+    }
+
+    fullscreenAvailable = false;
+}
+
 });
